@@ -1,0 +1,147 @@
+package com.example.list;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+
+    ListView lvmonhoc;
+    ArrayList<String> arrayListMH;
+    Button add,update,dele;
+    EditText editmonhoc;
+    int coun=-1;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        lvmonhoc= (ListView) findViewById(R.id.listView);
+        add = (Button) findViewById(R.id.button2);
+        update = (Button) findViewById(R.id.button3);
+        editmonhoc= (EditText) findViewById(R.id.editTextTextPersonName);
+        dele=(Button) findViewById(R.id.button4);
+        arrayListMH = new ArrayList<>();
+        arrayListMH.add("Android");
+        arrayListMH.add("Hướng đối tượng");
+        arrayListMH.add("Java");
+        arrayListMH.add("C++");
+        arrayListMH.add("LTDT");
+        arrayListMH.add("IOS");
+        arrayListMH.add("WEB");
+        arrayListMH.add("JS");
+
+        final ArrayAdapter adapter= new ArrayAdapter(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                arrayListMH);
+        lvmonhoc.setAdapter(adapter);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String monhoc = editmonhoc.getText().toString();
+                arrayListMH.add(monhoc);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        lvmonhoc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                editmonhoc.setText(arrayListMH.get(i));
+                coun=i;
+
+            }
+        });
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                arrayListMH.set(coun,editmonhoc.getText().toString());
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
+        lvmonhoc.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                arrayListMH.remove(i);
+                adapter.notifyDataSetChanged();
+                return false;
+                
+            }
+        });
+
+
+    }
+}
+
+
+XMl
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="nhập môn học"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="42dp" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="409dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="15dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="88dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_below="@+id/editTextTextPersonName"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD"
+
+        />
+    <Button
+        android:id="@+id/button3"
+        android:layout_below="@+id/editTextTextPersonName"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="90dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UPDATE"
+
+        />
+    <Button
+        android:id="@+id/button4"
+        android:layout_below="@+id/editTextTextPersonName"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="180dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DELETE"
+
+        />
+
+</RelativeLayout>
+
+
